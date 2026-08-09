@@ -15,7 +15,9 @@ export const EXCLUDED_KEYWORDS = [
   "announcement",
   "lyrical",
   "title track",
-  "title song"
+  "title song",
+  "Yearwrapped",
+  "GMTOnstage"
 ];
 
 export function isStory(title: string): boolean {
