@@ -1,0 +1,165 @@
+// use prisma-8
+
+model Channel {
+  id               String   @id @default(cuid(2))
+  name             String
+  url              String   @unique
+  youtubeChannelId String?
+  createdAt   TimestampString @default(now())
+  updatedAt   TimestampString @default(now())
+
+  shows Show[]
+}
+
+model Show {
+  id          String   @id @default(cuid(2))
+  name        String
+  channelId   String
+  description String?
+  createdAt   TimestampString @default(now())
+  updatedAt   TimestampString @default(now())
+
+  channel Channel @relation(fields: [channelId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  stories Story[]
+}
+
+model Story {
+  id            String   @id @default(cuid(2))
+  title         String
+  youtubeId     String   @unique
+  description   String?
+  url           String   @unique
+  thumbnailUrl  String?
+  duration      Int?
+  publishedAt   TimestampString?
+  showId        String
+  seriesId      String?
+  episodeNumber Int?
+  createdAt   TimestampString @default(now())
+  updatedAt   TimestampString @default(now())
+
+  show Show @relation(fields: [showId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  series Series? @relation(fields: [seriesId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  authors StoryAuthor[]
+  genres  StoryGenre[]
+  themes  StoryTheme[]
+
+  @@index([showId])
+  @@index([seriesId, episodeNumber])
+  @@index([publishedAt])
+  @@index([title])
+}
+
+model Series {
+  id          String   @id @default(cuid(2))
+  name        String
+  description String?
+  createdAt   TimestampString @default(now())
+  updatedAt   TimestampString @default(now())
+
+  stories Story[]
+  authors SeriesAuthor[]
+  genres  SeriesGenre[]
+  themes  SeriesTheme[]
+}
+
+model Author {
+  id        String   @id @default(cuid(2))
+  name      String
+  bio       String?
+  createdAt   TimestampString @default(now())
+  updatedAt   TimestampString @default(now())
+
+  stories StoryAuthor[]
+  series  SeriesAuthor[]
+
+  @@index([name])
+}
+
+model Genre {
+  id        String   @id @default(cuid(2))
+  name      String   @unique
+  createdAt   TimestampString @default(now())
+  updatedAt   TimestampString @default(now())
+
+  stories StoryGenre[]
+  series  SeriesGenre[]
+}
+
+model Theme {
+  id        String   @id @default(cuid(2))
+  name      String   @unique
+  createdAt   TimestampString @default(now())
+  updatedAt   TimestampString @default(now())
+
+  stories StoryTheme[]
+  series  SeriesTheme[]
+}
+
+model StoryAuthor {
+  storyId  String
+  authorId String
+
+  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  author Author @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([storyId, authorId])
+  @@index([authorId])
+}
+
+model StoryGenre {
+  storyId String
+  genreId String
+
+  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  genre Genre @relation(fields: [genreId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([storyId, genreId])
+  @@index([genreId])
+}
+
+model StoryTheme {
+  storyId String
+  themeId String
+
+  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  theme Theme @relation(fields: [themeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([storyId, themeId])
+  @@index([themeId])
+}
+
+model SeriesAuthor {
+  seriesId String
+  authorId String
+
+  series Series @relation(fields: [seriesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  author Author @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([seriesId, authorId])
+  @@index([authorId])
+}
+
+model SeriesGenre {
+  seriesId String
+  genreId  String
+
+  series Series @relation(fields: [seriesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  genre Genre @relation(fields: [genreId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([seriesId, genreId])
+  @@index([genreId])
+}
+
+model SeriesTheme {
+  seriesId String
+  themeId  String
+
+  series Series @relation(fields: [seriesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  theme Theme @relation(fields: [themeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([seriesId, themeId])
+  @@index([themeId])
+}

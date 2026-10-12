@@ -4,13 +4,22 @@
   "type": "module",
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest"
+    "@prisma/cli-engine": "0.7.0",
+    "@types/bun": "latest",
+    "@types/node": "^26.6.5",
+    "prisma": "^8.0.0-rc.22"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
+    "@prisma/orm-postgres": "^8.0.0-rc.17",
+    "dotenv": "^18.0.7",
     "execa": "^10.0.1",
     "zod": "^4.4.3"
+  },
+  "scripts": {
+    "contract:emit": "prisma contract emit",
+    "postinstall": "prisma skills sync || exit 0"
   }
 }
