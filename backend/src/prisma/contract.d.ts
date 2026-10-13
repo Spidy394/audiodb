@@ -18,9 +18,9 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'0cbcecfe51dd59afcd7f99adc3caf1747c9617635677ee8754af24eefaf1e248'>;
+  StorageHashBase<'691c6852a8416be669ef3c7b6db6d614aa591cc19d469547be0c88a67fffbf8e'>;
 export type ExecutionHash =
-  ExecutionHashBase<'9fd8fae1a789756bfd64f009640ce2640136884a58d61512e1ac68ae2a27f4ea'>;
+  ExecutionHashBase<'22e22c07a72289ac0d02cb2b376f5595969f02f2ae6bcb2ca0eab554804ad353'>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
 
@@ -249,6 +249,37 @@ export type FieldOutputTypes = {
       readonly url: CodecTypes['pg/text@1']['output'];
       readonly youtubeChannelId: CodecTypes['pg/text@1']['output'] | null;
     };
+    readonly EnrichmentJob: {
+      readonly attempts: CodecTypes['pg/int4@1']['output'];
+      readonly completedAt: CodecTypes['pg/timestamp-string@1']['output'] | null;
+      readonly createdAt: CodecTypes['pg/timestamp-string@1']['output'];
+      readonly entityId: CodecTypes['pg/text@1']['output'];
+      readonly entityType: 'STORY' | 'AUTHOR' | 'SERIES';
+      readonly errorCode: CodecTypes['pg/text@1']['output'] | null;
+      readonly errorMessage: CodecTypes['pg/text@1']['output'] | null;
+      readonly id: CodecTypes['pg/text@1']['output'];
+      readonly inputHash: CodecTypes['pg/text@1']['output'];
+      readonly lockedAt: CodecTypes['pg/timestamp-string@1']['output'] | null;
+      readonly maxAttempts: CodecTypes['pg/int4@1']['output'];
+      readonly model: CodecTypes['pg/text@1']['output'];
+      readonly nextRetryAt: CodecTypes['pg/timestamp-string@1']['output'] | null;
+      readonly output: CodecTypes['pg/json@1']['output'] | null;
+      readonly promptVersion: CodecTypes['pg/text@1']['output'];
+      readonly stage:
+        | 'STORY_DESCRIPTION'
+        | 'AUTHOR_RESOLUTION'
+        | 'AUTHOR_BIO'
+        | 'SERIES_RESOLUTION'
+        | 'SERIES_DESCRIPTION'
+        | 'SERIES_CHRONOLOGY'
+        | 'STORY_CLASSIFICATION'
+        | 'SERIES_CLASSIFICATION';
+      readonly startedAt: CodecTypes['pg/timestamp-string@1']['output'] | null;
+      readonly status:
+        'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED' | 'NEEDS_REVIEW' | 'SKIPPED';
+      readonly updatedAt: CodecTypes['pg/timestamp-string@1']['output'];
+      readonly workerId: CodecTypes['pg/text@1']['output'] | null;
+    };
     readonly Genre: {
       readonly createdAt: CodecTypes['pg/timestamp-string@1']['output'];
       readonly id: CodecTypes['pg/text@1']['output'];
@@ -268,6 +299,7 @@ export type FieldOutputTypes = {
     };
     readonly SeriesGenre: {
       readonly genreId: CodecTypes['pg/text@1']['output'];
+      readonly role: 'PRIMARY' | 'SECONDARY';
       readonly seriesId: CodecTypes['pg/text@1']['output'];
     };
     readonly SeriesTheme: {
@@ -303,6 +335,7 @@ export type FieldOutputTypes = {
     };
     readonly StoryGenre: {
       readonly genreId: CodecTypes['pg/text@1']['output'];
+      readonly role: 'PRIMARY' | 'SECONDARY';
       readonly storyId: CodecTypes['pg/text@1']['output'];
     };
     readonly StoryTheme: {
@@ -334,6 +367,37 @@ export type FieldInputTypes = {
       readonly url: CodecTypes['pg/text@1']['input'];
       readonly youtubeChannelId: CodecTypes['pg/text@1']['input'] | null;
     };
+    readonly EnrichmentJob: {
+      readonly attempts: CodecTypes['pg/int4@1']['input'];
+      readonly completedAt: CodecTypes['pg/timestamp-string@1']['input'] | null;
+      readonly createdAt: CodecTypes['pg/timestamp-string@1']['input'];
+      readonly entityId: CodecTypes['pg/text@1']['input'];
+      readonly entityType: 'STORY' | 'AUTHOR' | 'SERIES';
+      readonly errorCode: CodecTypes['pg/text@1']['input'] | null;
+      readonly errorMessage: CodecTypes['pg/text@1']['input'] | null;
+      readonly id: CodecTypes['pg/text@1']['input'];
+      readonly inputHash: CodecTypes['pg/text@1']['input'];
+      readonly lockedAt: CodecTypes['pg/timestamp-string@1']['input'] | null;
+      readonly maxAttempts: CodecTypes['pg/int4@1']['input'];
+      readonly model: CodecTypes['pg/text@1']['input'];
+      readonly nextRetryAt: CodecTypes['pg/timestamp-string@1']['input'] | null;
+      readonly output: CodecTypes['pg/json@1']['input'] | null;
+      readonly promptVersion: CodecTypes['pg/text@1']['input'];
+      readonly stage:
+        | 'STORY_DESCRIPTION'
+        | 'AUTHOR_RESOLUTION'
+        | 'AUTHOR_BIO'
+        | 'SERIES_RESOLUTION'
+        | 'SERIES_DESCRIPTION'
+        | 'SERIES_CHRONOLOGY'
+        | 'STORY_CLASSIFICATION'
+        | 'SERIES_CLASSIFICATION';
+      readonly startedAt: CodecTypes['pg/timestamp-string@1']['input'] | null;
+      readonly status:
+        'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED' | 'NEEDS_REVIEW' | 'SKIPPED';
+      readonly updatedAt: CodecTypes['pg/timestamp-string@1']['input'];
+      readonly workerId: CodecTypes['pg/text@1']['input'] | null;
+    };
     readonly Genre: {
       readonly createdAt: CodecTypes['pg/timestamp-string@1']['input'];
       readonly id: CodecTypes['pg/text@1']['input'];
@@ -353,6 +417,7 @@ export type FieldInputTypes = {
     };
     readonly SeriesGenre: {
       readonly genreId: CodecTypes['pg/text@1']['input'];
+      readonly role: 'PRIMARY' | 'SECONDARY';
       readonly seriesId: CodecTypes['pg/text@1']['input'];
     };
     readonly SeriesTheme: {
@@ -388,6 +453,7 @@ export type FieldInputTypes = {
     };
     readonly StoryGenre: {
       readonly genreId: CodecTypes['pg/text@1']['input'];
+      readonly role: 'PRIMARY' | 'SECONDARY';
       readonly storyId: CodecTypes['pg/text@1']['input'];
     };
     readonly StoryTheme: {
@@ -419,6 +485,37 @@ export type StorageColumnTypes = {
       readonly url: CodecTypes['pg/text@1']['output'];
       readonly youtubeChannelId: CodecTypes['pg/text@1']['output'] | null;
     };
+    readonly EnrichmentJob: {
+      readonly attempts: CodecTypes['pg/int4@1']['output'];
+      readonly completedAt: CodecTypes['pg/timestamp-string@1']['output'] | null;
+      readonly createdAt: CodecTypes['pg/timestamp-string@1']['output'];
+      readonly entityId: CodecTypes['pg/text@1']['output'];
+      readonly entityType: 'STORY' | 'AUTHOR' | 'SERIES';
+      readonly errorCode: CodecTypes['pg/text@1']['output'] | null;
+      readonly errorMessage: CodecTypes['pg/text@1']['output'] | null;
+      readonly id: CodecTypes['pg/text@1']['output'];
+      readonly inputHash: CodecTypes['pg/text@1']['output'];
+      readonly lockedAt: CodecTypes['pg/timestamp-string@1']['output'] | null;
+      readonly maxAttempts: CodecTypes['pg/int4@1']['output'];
+      readonly model: CodecTypes['pg/text@1']['output'];
+      readonly nextRetryAt: CodecTypes['pg/timestamp-string@1']['output'] | null;
+      readonly output: CodecTypes['pg/json@1']['output'] | null;
+      readonly promptVersion: CodecTypes['pg/text@1']['output'];
+      readonly stage:
+        | 'STORY_DESCRIPTION'
+        | 'AUTHOR_RESOLUTION'
+        | 'AUTHOR_BIO'
+        | 'SERIES_RESOLUTION'
+        | 'SERIES_DESCRIPTION'
+        | 'SERIES_CHRONOLOGY'
+        | 'STORY_CLASSIFICATION'
+        | 'SERIES_CLASSIFICATION';
+      readonly startedAt: CodecTypes['pg/timestamp-string@1']['output'] | null;
+      readonly status:
+        'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED' | 'NEEDS_REVIEW' | 'SKIPPED';
+      readonly updatedAt: CodecTypes['pg/timestamp-string@1']['output'];
+      readonly workerId: CodecTypes['pg/text@1']['output'] | null;
+    };
     readonly Genre: {
       readonly createdAt: CodecTypes['pg/timestamp-string@1']['output'];
       readonly id: CodecTypes['pg/text@1']['output'];
@@ -438,6 +535,7 @@ export type StorageColumnTypes = {
     };
     readonly SeriesGenre: {
       readonly genreId: CodecTypes['pg/text@1']['output'];
+      readonly role: 'PRIMARY' | 'SECONDARY';
       readonly seriesId: CodecTypes['pg/text@1']['output'];
     };
     readonly SeriesTheme: {
@@ -473,6 +571,7 @@ export type StorageColumnTypes = {
     };
     readonly StoryGenre: {
       readonly genreId: CodecTypes['pg/text@1']['output'];
+      readonly role: 'PRIMARY' | 'SECONDARY';
       readonly storyId: CodecTypes['pg/text@1']['output'];
     };
     readonly StoryTheme: {
@@ -504,6 +603,37 @@ export type StorageColumnInputTypes = {
       readonly url: CodecTypes['pg/text@1']['input'];
       readonly youtubeChannelId: CodecTypes['pg/text@1']['input'] | null;
     };
+    readonly EnrichmentJob: {
+      readonly attempts: CodecTypes['pg/int4@1']['input'];
+      readonly completedAt: CodecTypes['pg/timestamp-string@1']['input'] | null;
+      readonly createdAt: CodecTypes['pg/timestamp-string@1']['input'];
+      readonly entityId: CodecTypes['pg/text@1']['input'];
+      readonly entityType: 'STORY' | 'AUTHOR' | 'SERIES';
+      readonly errorCode: CodecTypes['pg/text@1']['input'] | null;
+      readonly errorMessage: CodecTypes['pg/text@1']['input'] | null;
+      readonly id: CodecTypes['pg/text@1']['input'];
+      readonly inputHash: CodecTypes['pg/text@1']['input'];
+      readonly lockedAt: CodecTypes['pg/timestamp-string@1']['input'] | null;
+      readonly maxAttempts: CodecTypes['pg/int4@1']['input'];
+      readonly model: CodecTypes['pg/text@1']['input'];
+      readonly nextRetryAt: CodecTypes['pg/timestamp-string@1']['input'] | null;
+      readonly output: CodecTypes['pg/json@1']['input'] | null;
+      readonly promptVersion: CodecTypes['pg/text@1']['input'];
+      readonly stage:
+        | 'STORY_DESCRIPTION'
+        | 'AUTHOR_RESOLUTION'
+        | 'AUTHOR_BIO'
+        | 'SERIES_RESOLUTION'
+        | 'SERIES_DESCRIPTION'
+        | 'SERIES_CHRONOLOGY'
+        | 'STORY_CLASSIFICATION'
+        | 'SERIES_CLASSIFICATION';
+      readonly startedAt: CodecTypes['pg/timestamp-string@1']['input'] | null;
+      readonly status:
+        'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED' | 'NEEDS_REVIEW' | 'SKIPPED';
+      readonly updatedAt: CodecTypes['pg/timestamp-string@1']['input'];
+      readonly workerId: CodecTypes['pg/text@1']['input'] | null;
+    };
     readonly Genre: {
       readonly createdAt: CodecTypes['pg/timestamp-string@1']['input'];
       readonly id: CodecTypes['pg/text@1']['input'];
@@ -523,6 +653,7 @@ export type StorageColumnInputTypes = {
     };
     readonly SeriesGenre: {
       readonly genreId: CodecTypes['pg/text@1']['input'];
+      readonly role: 'PRIMARY' | 'SECONDARY';
       readonly seriesId: CodecTypes['pg/text@1']['input'];
     };
     readonly SeriesTheme: {
@@ -558,6 +689,7 @@ export type StorageColumnInputTypes = {
     };
     readonly StoryGenre: {
       readonly genreId: CodecTypes['pg/text@1']['input'];
+      readonly role: 'PRIMARY' | 'SECONDARY';
       readonly storyId: CodecTypes['pg/text@1']['input'];
     };
     readonly StoryTheme: {
@@ -594,6 +726,37 @@ export namespace Models {
     shows: public_Show[];
     readonly [RelationKeys]?: 'shows';
   };
+  export type public_EnrichmentJob = {
+    attempts: CodecTypes['pg/int4@1']['output'];
+    completedAt: CodecTypes['pg/timestamp-string@1']['output'] | null;
+    createdAt: CodecTypes['pg/timestamp-string@1']['output'];
+    entityId: CodecTypes['pg/text@1']['output'];
+    entityType: 'STORY' | 'AUTHOR' | 'SERIES';
+    errorCode: CodecTypes['pg/text@1']['output'] | null;
+    errorMessage: CodecTypes['pg/text@1']['output'] | null;
+    id: CodecTypes['pg/text@1']['output'];
+    inputHash: CodecTypes['pg/text@1']['output'];
+    lockedAt: CodecTypes['pg/timestamp-string@1']['output'] | null;
+    maxAttempts: CodecTypes['pg/int4@1']['output'];
+    model: CodecTypes['pg/text@1']['output'];
+    nextRetryAt: CodecTypes['pg/timestamp-string@1']['output'] | null;
+    output: CodecTypes['pg/json@1']['output'] | null;
+    promptVersion: CodecTypes['pg/text@1']['output'];
+    stage:
+      | 'STORY_DESCRIPTION'
+      | 'AUTHOR_RESOLUTION'
+      | 'AUTHOR_BIO'
+      | 'SERIES_RESOLUTION'
+      | 'SERIES_DESCRIPTION'
+      | 'SERIES_CHRONOLOGY'
+      | 'STORY_CLASSIFICATION'
+      | 'SERIES_CLASSIFICATION';
+    startedAt: CodecTypes['pg/timestamp-string@1']['output'] | null;
+    status: 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED' | 'NEEDS_REVIEW' | 'SKIPPED';
+    updatedAt: CodecTypes['pg/timestamp-string@1']['output'];
+    workerId: CodecTypes['pg/text@1']['output'] | null;
+    readonly [RelationKeys]?: never;
+  };
   export type public_Genre = {
     createdAt: CodecTypes['pg/timestamp-string@1']['output'];
     id: CodecTypes['pg/text@1']['output'];
@@ -624,6 +787,7 @@ export namespace Models {
   };
   export type public_SeriesGenre = {
     genreId: CodecTypes['pg/text@1']['output'];
+    role: 'PRIMARY' | 'SECONDARY';
     seriesId: CodecTypes['pg/text@1']['output'];
     genre: public_Genre;
     series: public_Series;
@@ -677,6 +841,7 @@ export namespace Models {
   };
   export type public_StoryGenre = {
     genreId: CodecTypes['pg/text@1']['output'];
+    role: 'PRIMARY' | 'SECONDARY';
     storyId: CodecTypes['pg/text@1']['output'];
     genre: public_Genre;
     story: public_Story;
@@ -704,6 +869,7 @@ export declare const models: {
   public: {
     Author: Models.public_Author;
     Channel: Models.public_Channel;
+    EnrichmentJob: Models.public_EnrichmentJob;
     Genre: Models.public_Genre;
     Series: Models.public_Series;
     SeriesAuthor: Models.public_SeriesAuthor;
@@ -829,6 +995,183 @@ type ContractBase = Omit<
               indexes: readonly [];
               foreignKeys: readonly [];
             };
+            readonly EnrichmentJob: {
+              columns: {
+                readonly attempts: {
+                  readonly dataType: 'pg/int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/int4@1', 0>;
+                  };
+                  readonly many: false;
+                };
+                readonly completedAt: {
+                  readonly dataType: 'pg/timestamp';
+                  readonly codecId: 'pg/timestamp-string@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly createdAt: {
+                  readonly dataType: 'pg/timestamp';
+                  readonly codecId: 'pg/timestamp-string@1';
+                  readonly nullable: false;
+                  readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
+                  readonly many: false;
+                };
+                readonly entityId: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly entityType: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly errorCode: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly errorMessage: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly id: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly inputHash: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly lockedAt: {
+                  readonly dataType: 'pg/timestamp';
+                  readonly codecId: 'pg/timestamp-string@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly maxAttempts: {
+                  readonly dataType: 'pg/int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/int4@1', 3>;
+                  };
+                  readonly many: false;
+                };
+                readonly model: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly nextRetryAt: {
+                  readonly dataType: 'pg/timestamp';
+                  readonly codecId: 'pg/timestamp-string@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly output: {
+                  readonly dataType: 'pg/json';
+                  readonly codecId: 'pg/json@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly promptVersion: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly stage: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly many: false;
+                };
+                readonly startedAt: {
+                  readonly dataType: 'pg/timestamp';
+                  readonly codecId: 'pg/timestamp-string@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+                readonly status: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/text@1', 'PENDING'>;
+                  };
+                  readonly many: false;
+                };
+                readonly updatedAt: {
+                  readonly dataType: 'pg/timestamp';
+                  readonly codecId: 'pg/timestamp-string@1';
+                  readonly nullable: false;
+                  readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
+                  readonly many: false;
+                };
+                readonly workerId: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                  readonly many: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['id'] };
+              uniques: readonly [
+                {
+                  readonly columns: readonly [
+                    'entityType',
+                    'entityId',
+                    'stage',
+                    'promptVersion',
+                    'inputHash',
+                  ];
+                },
+              ];
+              indexes: readonly [
+                {
+                  readonly name: 'EnrichmentJob_createdAt_idx_9575dbd7';
+                  readonly prefix: 'EnrichmentJob_createdAt_idx';
+                  readonly columns: readonly ['createdAt'];
+                  readonly unique: false;
+                },
+                {
+                  readonly name: 'EnrichmentJob_entityType_entityId_idx_ea0fa809';
+                  readonly prefix: 'EnrichmentJob_entityType_entityId_idx';
+                  readonly columns: readonly ['entityType', 'entityId'];
+                  readonly unique: false;
+                },
+                {
+                  readonly name: 'EnrichmentJob_status_lockedAt_idx_9145e76a';
+                  readonly prefix: 'EnrichmentJob_status_lockedAt_idx';
+                  readonly columns: readonly ['status', 'lockedAt'];
+                  readonly unique: false;
+                },
+                {
+                  readonly name: 'EnrichmentJob_status_nextRetryAt_idx_58d36316';
+                  readonly prefix: 'EnrichmentJob_status_nextRetryAt_idx';
+                  readonly columns: readonly ['status', 'nextRetryAt'];
+                  readonly unique: false;
+                },
+              ];
+              foreignKeys: readonly [];
+            };
             readonly Genre: {
               columns: {
                 readonly createdAt: {
@@ -900,7 +1243,14 @@ type ContractBase = Omit<
               };
               primaryKey: { readonly columns: readonly ['id'] };
               uniques: readonly [];
-              indexes: readonly [];
+              indexes: readonly [
+                {
+                  readonly name: 'Series_name_idx_ce87e6ba';
+                  readonly prefix: 'Series_name_idx';
+                  readonly columns: readonly ['name'];
+                  readonly unique: false;
+                },
+              ];
               foreignKeys: readonly [];
             };
             readonly SeriesAuthor: {
@@ -969,6 +1319,16 @@ type ContractBase = Omit<
                   readonly nullable: false;
                   readonly many: false;
                 };
+                readonly role: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/text@1', 'SECONDARY'>;
+                  };
+                  readonly many: false;
+                };
                 readonly seriesId: {
                   readonly dataType: 'pg/text';
                   readonly codecId: 'pg/text@1';
@@ -989,6 +1349,12 @@ type ContractBase = Omit<
                   readonly name: 'SeriesGenre_seriesId_idx_582cd0a3';
                   readonly prefix: 'SeriesGenre_seriesId_idx';
                   readonly columns: readonly ['seriesId'];
+                  readonly unique: false;
+                },
+                {
+                  readonly name: 'SeriesGenre_seriesId_role_idx_e3707400';
+                  readonly prefix: 'SeriesGenre_seriesId_role_idx';
+                  readonly columns: readonly ['seriesId', 'role'];
                   readonly unique: false;
                 },
               ];
@@ -1356,6 +1722,16 @@ type ContractBase = Omit<
                   readonly nullable: false;
                   readonly many: false;
                 };
+                readonly role: {
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/text@1', 'SECONDARY'>;
+                  };
+                  readonly many: false;
+                };
                 readonly storyId: {
                   readonly dataType: 'pg/text';
                   readonly codecId: 'pg/text@1';
@@ -1376,6 +1752,12 @@ type ContractBase = Omit<
                   readonly name: 'StoryGenre_storyId_idx_cd452158';
                   readonly prefix: 'StoryGenre_storyId_idx';
                   readonly columns: readonly ['storyId'];
+                  readonly unique: false;
+                },
+                {
+                  readonly name: 'StoryGenre_storyId_role_idx_beea31dc';
+                  readonly prefix: 'StoryGenre_storyId_role_idx';
+                  readonly columns: readonly ['storyId', 'role'];
                   readonly unique: false;
                 },
               ];
@@ -1499,6 +1881,40 @@ type ContractBase = Omit<
               foreignKeys: readonly [];
             };
           };
+          readonly valueSet: {
+            readonly EnrichmentEntityType: {
+              readonly kind: 'valueSet';
+              readonly values: readonly ['STORY', 'AUTHOR', 'SERIES'];
+            };
+            readonly EnrichmentStage: {
+              readonly kind: 'valueSet';
+              readonly values: readonly [
+                'STORY_DESCRIPTION',
+                'AUTHOR_RESOLUTION',
+                'AUTHOR_BIO',
+                'SERIES_RESOLUTION',
+                'SERIES_DESCRIPTION',
+                'SERIES_CHRONOLOGY',
+                'STORY_CLASSIFICATION',
+                'SERIES_CLASSIFICATION',
+              ];
+            };
+            readonly EnrichmentStatus: {
+              readonly kind: 'valueSet';
+              readonly values: readonly [
+                'PENDING',
+                'PROCESSING',
+                'COMPLETED',
+                'FAILED',
+                'NEEDS_REVIEW',
+                'SKIPPED',
+              ];
+            };
+            readonly GenreRole: {
+              readonly kind: 'valueSet';
+              readonly values: readonly ['PRIMARY', 'SECONDARY'];
+            };
+          };
         };
       };
     };
@@ -1511,6 +1927,10 @@ type ContractBase = Omit<
   readonly roots: {
     readonly Author: { readonly namespace: 'public' & NamespaceId; readonly model: 'Author' };
     readonly Channel: { readonly namespace: 'public' & NamespaceId; readonly model: 'Channel' };
+    readonly EnrichmentJob: {
+      readonly namespace: 'public' & NamespaceId;
+      readonly model: 'EnrichmentJob';
+    };
     readonly Genre: { readonly namespace: 'public' & NamespaceId; readonly model: 'Genre' };
     readonly Series: { readonly namespace: 'public' & NamespaceId; readonly model: 'Series' };
     readonly SeriesAuthor: {
@@ -1663,6 +2083,135 @@ type ContractBase = Omit<
                 readonly updatedAt: { readonly column: 'updatedAt' };
                 readonly url: { readonly column: 'url' };
                 readonly youtubeChannelId: { readonly column: 'youtubeChannelId' };
+              };
+            };
+          };
+          readonly EnrichmentJob: {
+            readonly fields: {
+              readonly attempts: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly completedAt: {
+                readonly nullable: true;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamp-string@1';
+                };
+              };
+              readonly createdAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamp-string@1';
+                };
+              };
+              readonly entityId: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly entityType: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly errorCode: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly errorMessage: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly inputHash: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly lockedAt: {
+                readonly nullable: true;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamp-string@1';
+                };
+              };
+              readonly maxAttempts: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly model: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly nextRetryAt: {
+                readonly nullable: true;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamp-string@1';
+                };
+              };
+              readonly output: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/json@1' };
+              };
+              readonly promptVersion: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly stage: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly startedAt: {
+                readonly nullable: true;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamp-string@1';
+                };
+              };
+              readonly status: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly updatedAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamp-string@1';
+                };
+              };
+              readonly workerId: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+            };
+            readonly relations: Record<string, never>;
+            readonly storage: {
+              readonly table: 'EnrichmentJob';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly attempts: { readonly column: 'attempts' };
+                readonly completedAt: { readonly column: 'completedAt' };
+                readonly createdAt: { readonly column: 'createdAt' };
+                readonly entityId: { readonly column: 'entityId' };
+                readonly entityType: { readonly column: 'entityType' };
+                readonly errorCode: { readonly column: 'errorCode' };
+                readonly errorMessage: { readonly column: 'errorMessage' };
+                readonly id: { readonly column: 'id' };
+                readonly inputHash: { readonly column: 'inputHash' };
+                readonly lockedAt: { readonly column: 'lockedAt' };
+                readonly maxAttempts: { readonly column: 'maxAttempts' };
+                readonly model: { readonly column: 'model' };
+                readonly nextRetryAt: { readonly column: 'nextRetryAt' };
+                readonly output: { readonly column: 'output' };
+                readonly promptVersion: { readonly column: 'promptVersion' };
+                readonly stage: { readonly column: 'stage' };
+                readonly startedAt: { readonly column: 'startedAt' };
+                readonly status: { readonly column: 'status' };
+                readonly updatedAt: { readonly column: 'updatedAt' };
+                readonly workerId: { readonly column: 'workerId' };
               };
             };
           };
@@ -1865,6 +2414,10 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
+              readonly role: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
               readonly seriesId: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
@@ -1901,6 +2454,7 @@ type ContractBase = Omit<
               readonly namespaceId: 'public';
               readonly fields: {
                 readonly genreId: { readonly column: 'genreId' };
+                readonly role: { readonly column: 'role' };
                 readonly seriesId: { readonly column: 'seriesId' };
               };
             };
@@ -2214,6 +2768,10 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
+              readonly role: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
               readonly storyId: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
@@ -2250,6 +2808,7 @@ type ContractBase = Omit<
               readonly namespaceId: 'public';
               readonly fields: {
                 readonly genreId: { readonly column: 'genreId' };
+                readonly role: { readonly column: 'role' };
                 readonly storyId: { readonly column: 'storyId' };
               };
             };
@@ -2361,6 +2920,76 @@ type ContractBase = Omit<
             };
           };
         };
+        readonly enum: {
+          readonly EnrichmentEntityType: {
+            readonly codecId: 'pg/text@1';
+            readonly members: readonly [
+              { readonly name: 'STORY'; readonly value: 'STORY' },
+              { readonly name: 'AUTHOR'; readonly value: 'AUTHOR' },
+              { readonly name: 'SERIES'; readonly value: 'SERIES' },
+            ];
+          };
+          readonly EnrichmentStage: {
+            readonly codecId: 'pg/text@1';
+            readonly members: readonly [
+              { readonly name: 'STORY_DESCRIPTION'; readonly value: 'STORY_DESCRIPTION' },
+              { readonly name: 'AUTHOR_RESOLUTION'; readonly value: 'AUTHOR_RESOLUTION' },
+              { readonly name: 'AUTHOR_BIO'; readonly value: 'AUTHOR_BIO' },
+              { readonly name: 'SERIES_RESOLUTION'; readonly value: 'SERIES_RESOLUTION' },
+              { readonly name: 'SERIES_DESCRIPTION'; readonly value: 'SERIES_DESCRIPTION' },
+              { readonly name: 'SERIES_CHRONOLOGY'; readonly value: 'SERIES_CHRONOLOGY' },
+              { readonly name: 'STORY_CLASSIFICATION'; readonly value: 'STORY_CLASSIFICATION' },
+              { readonly name: 'SERIES_CLASSIFICATION'; readonly value: 'SERIES_CLASSIFICATION' },
+            ];
+          };
+          readonly EnrichmentStatus: {
+            readonly codecId: 'pg/text@1';
+            readonly members: readonly [
+              { readonly name: 'PENDING'; readonly value: 'PENDING' },
+              { readonly name: 'PROCESSING'; readonly value: 'PROCESSING' },
+              { readonly name: 'COMPLETED'; readonly value: 'COMPLETED' },
+              { readonly name: 'FAILED'; readonly value: 'FAILED' },
+              { readonly name: 'NEEDS_REVIEW'; readonly value: 'NEEDS_REVIEW' },
+              { readonly name: 'SKIPPED'; readonly value: 'SKIPPED' },
+            ];
+          };
+          readonly GenreRole: {
+            readonly codecId: 'pg/text@1';
+            readonly members: readonly [
+              { readonly name: 'PRIMARY'; readonly value: 'PRIMARY' },
+              { readonly name: 'SECONDARY'; readonly value: 'SECONDARY' },
+            ];
+          };
+        };
+        readonly enumMemberTypes?: {
+          readonly EnrichmentEntityType: readonly [
+            { readonly name: 'STORY'; readonly value: 'STORY' },
+            { readonly name: 'AUTHOR'; readonly value: 'AUTHOR' },
+            { readonly name: 'SERIES'; readonly value: 'SERIES' },
+          ];
+          readonly EnrichmentStage: readonly [
+            { readonly name: 'STORY_DESCRIPTION'; readonly value: 'STORY_DESCRIPTION' },
+            { readonly name: 'AUTHOR_RESOLUTION'; readonly value: 'AUTHOR_RESOLUTION' },
+            { readonly name: 'AUTHOR_BIO'; readonly value: 'AUTHOR_BIO' },
+            { readonly name: 'SERIES_RESOLUTION'; readonly value: 'SERIES_RESOLUTION' },
+            { readonly name: 'SERIES_DESCRIPTION'; readonly value: 'SERIES_DESCRIPTION' },
+            { readonly name: 'SERIES_CHRONOLOGY'; readonly value: 'SERIES_CHRONOLOGY' },
+            { readonly name: 'STORY_CLASSIFICATION'; readonly value: 'STORY_CLASSIFICATION' },
+            { readonly name: 'SERIES_CLASSIFICATION'; readonly value: 'SERIES_CLASSIFICATION' },
+          ];
+          readonly EnrichmentStatus: readonly [
+            { readonly name: 'PENDING'; readonly value: 'PENDING' },
+            { readonly name: 'PROCESSING'; readonly value: 'PROCESSING' },
+            { readonly name: 'COMPLETED'; readonly value: 'COMPLETED' },
+            { readonly name: 'FAILED'; readonly value: 'FAILED' },
+            { readonly name: 'NEEDS_REVIEW'; readonly value: 'NEEDS_REVIEW' },
+            { readonly name: 'SKIPPED'; readonly value: 'SKIPPED' },
+          ];
+          readonly GenreRole: readonly [
+            { readonly name: 'PRIMARY'; readonly value: 'PRIMARY' },
+            { readonly name: 'SECONDARY'; readonly value: 'SECONDARY' },
+          ];
+        };
       };
     };
   };
@@ -2408,6 +3037,14 @@ type ContractBase = Omit<
           readonly onCreate: { readonly id: 'cuid2'; readonly kind: 'generator' };
           readonly ref: {
             readonly entry: 'Channel';
+            readonly field: 'id';
+            readonly namespace: 'public';
+          };
+        },
+        {
+          readonly onCreate: { readonly id: 'cuid2'; readonly kind: 'generator' };
+          readonly ref: {
+            readonly entry: 'EnrichmentJob';
             readonly field: 'id';
             readonly namespace: 'public';
           };

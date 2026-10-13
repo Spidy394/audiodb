@@ -12,6 +12,10 @@
       "model": "Channel",
       "namespace": "public"
     },
+    "EnrichmentJob": {
+      "model": "EnrichmentJob",
+      "namespace": "public"
+    },
     "Genre": {
       "model": "Genre",
       "namespace": "public"
@@ -60,6 +64,104 @@
   "domain": {
     "namespaces": {
       "public": {
+        "enum": {
+          "EnrichmentEntityType": {
+            "codecId": "pg/text@1",
+            "members": [
+              {
+                "name": "STORY",
+                "value": "STORY"
+              },
+              {
+                "name": "AUTHOR",
+                "value": "AUTHOR"
+              },
+              {
+                "name": "SERIES",
+                "value": "SERIES"
+              }
+            ]
+          },
+          "EnrichmentStage": {
+            "codecId": "pg/text@1",
+            "members": [
+              {
+                "name": "STORY_DESCRIPTION",
+                "value": "STORY_DESCRIPTION"
+              },
+              {
+                "name": "AUTHOR_RESOLUTION",
+                "value": "AUTHOR_RESOLUTION"
+              },
+              {
+                "name": "AUTHOR_BIO",
+                "value": "AUTHOR_BIO"
+              },
+              {
+                "name": "SERIES_RESOLUTION",
+                "value": "SERIES_RESOLUTION"
+              },
+              {
+                "name": "SERIES_DESCRIPTION",
+                "value": "SERIES_DESCRIPTION"
+              },
+              {
+                "name": "SERIES_CHRONOLOGY",
+                "value": "SERIES_CHRONOLOGY"
+              },
+              {
+                "name": "STORY_CLASSIFICATION",
+                "value": "STORY_CLASSIFICATION"
+              },
+              {
+                "name": "SERIES_CLASSIFICATION",
+                "value": "SERIES_CLASSIFICATION"
+              }
+            ]
+          },
+          "EnrichmentStatus": {
+            "codecId": "pg/text@1",
+            "members": [
+              {
+                "name": "PENDING",
+                "value": "PENDING"
+              },
+              {
+                "name": "PROCESSING",
+                "value": "PROCESSING"
+              },
+              {
+                "name": "COMPLETED",
+                "value": "COMPLETED"
+              },
+              {
+                "name": "FAILED",
+                "value": "FAILED"
+              },
+              {
+                "name": "NEEDS_REVIEW",
+                "value": "NEEDS_REVIEW"
+              },
+              {
+                "name": "SKIPPED",
+                "value": "SKIPPED"
+              }
+            ]
+          },
+          "GenreRole": {
+            "codecId": "pg/text@1",
+            "members": [
+              {
+                "name": "PRIMARY",
+                "value": "PRIMARY"
+              },
+              {
+                "name": "SECONDARY",
+                "value": "SECONDARY"
+              }
+            ]
+          }
+        },
         "models": {
           "Author": {
             "fields": {
@@ -238,6 +340,235 @@
               },
               "namespaceId": "public",
               "table": "Channel"
+            }
+          },
+          "EnrichmentJob": {
+            "fields": {
+              "attempts": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "completedAt": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/timestamp-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "createdAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamp-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "entityId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "entityType": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                },
+                "valueSet": {
+                  "entityKind": "enum",
+                  "entityName": "EnrichmentEntityType",
+                  "namespaceId": "public",
+                  "plane": "domain"
+                }
+              },
+              "errorCode": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "errorMessage": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "inputHash": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "lockedAt": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/timestamp-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "maxAttempts": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "model": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "nextRetryAt": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/timestamp-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "output": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/json@1",
+                  "kind": "scalar"
+                }
+              },
+              "promptVersion": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "stage": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                },
+                "valueSet": {
+                  "entityKind": "enum",
+                  "entityName": "EnrichmentStage",
+                  "namespaceId": "public",
+                  "plane": "domain"
+                }
+              },
+              "startedAt": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/timestamp-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "status": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                },
+                "valueSet": {
+                  "entityKind": "enum",
+                  "entityName": "EnrichmentStatus",
+                  "namespaceId": "public",
+                  "plane": "domain"
+                }
+              },
+              "updatedAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamp-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "workerId": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "attempts": {
+                  "column": "attempts"
+                },
+                "completedAt": {
+                  "column": "completedAt"
+                },
+                "createdAt": {
+                  "column": "createdAt"
+                },
+                "entityId": {
+                  "column": "entityId"
+                },
+                "entityType": {
+                  "column": "entityType"
+                },
+                "errorCode": {
+                  "column": "errorCode"
+                },
+                "errorMessage": {
+                  "column": "errorMessage"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "inputHash": {
+                  "column": "inputHash"
+                },
+                "lockedAt": {
+                  "column": "lockedAt"
+                },
+                "maxAttempts": {
+                  "column": "maxAttempts"
+                },
+                "model": {
+                  "column": "model"
+                },
+                "nextRetryAt": {
+                  "column": "nextRetryAt"
+                },
+                "output": {
+                  "column": "output"
+                },
+                "promptVersion": {
+                  "column": "promptVersion"
+                },
+                "stage": {
+                  "column": "stage"
+                },
+                "startedAt": {
+                  "column": "startedAt"
+                },
+                "status": {
+                  "column": "status"
+                },
+                "updatedAt": {
+                  "column": "updatedAt"
+                },
+                "workerId": {
+                  "column": "workerId"
+                }
+              },
+              "namespaceId": "public",
+              "table": "EnrichmentJob"
             }
           },
           "Genre": {
@@ -517,6 +848,19 @@
                   "kind": "scalar"
                 }
               },
+              "role": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                },
+                "valueSet": {
+                  "entityKind": "enum",
+                  "entityName": "GenreRole",
+                  "namespaceId": "public",
+                  "plane": "domain"
+                }
+              },
               "seriesId": {
                 "nullable": false,
                 "type": {
@@ -563,6 +907,9 @@
               "fields": {
                 "genreId": {
                   "column": "genreId"
+                },
+                "role": {
+                  "column": "role"
                 },
                 "seriesId": {
                   "column": "seriesId"
@@ -1031,6 +1378,19 @@
                   "kind": "scalar"
                 }
               },
+              "role": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                },
+                "valueSet": {
+                  "entityKind": "enum",
+                  "entityName": "GenreRole",
+                  "namespaceId": "public",
+                  "plane": "domain"
+                }
+              },
               "storyId": {
                 "nullable": false,
                 "type": {
@@ -1077,6 +1437,9 @@
               "fields": {
                 "genreId": {
                   "column": "genreId"
+                },
+                "role": {
+                  "column": "role"
                 },
                 "storyId": {
                   "column": "storyId"
@@ -1351,6 +1714,219 @@
                 }
               ]
             },
+            "EnrichmentJob": {
+              "checks": [
+                {
+                  "expression": "\"entityType\" IN ('STORY', 'AUTHOR', 'SERIES')",
+                  "name": "EnrichmentJob_entityType_check_7ea76b51",
+                  "prefix": "EnrichmentJob_entityType_check"
+                },
+                {
+                  "expression": "\"stage\" IN ('STORY_DESCRIPTION', 'AUTHOR_RESOLUTION', 'AUTHOR_BIO', 'SERIES_RESOLUTION', 'SERIES_DESCRIPTION', 'SERIES_CHRONOLOGY', 'STORY_CLASSIFICATION', 'SERIES_CLASSIFICATION')",
+                  "name": "EnrichmentJob_stage_check_d1fc3b70",
+                  "prefix": "EnrichmentJob_stage_check"
+                },
+                {
+                  "expression": "\"status\" IN ('PENDING', 'PROCESSING', 'COMPLETED', 'FAILED', 'NEEDS_REVIEW', 'SKIPPED')",
+                  "name": "EnrichmentJob_status_check_aefa5919",
+                  "prefix": "EnrichmentJob_status_check"
+                }
+              ],
+              "columns": {
+                "attempts": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "default": {
+                    "kind": "literal",
+                    "value": 0
+                  },
+                  "nullable": false
+                },
+                "completedAt": {
+                  "codecId": "pg/timestamp-string@1",
+                  "dataType": "pg/timestamp",
+                  "nullable": true
+                },
+                "createdAt": {
+                  "codecId": "pg/timestamp-string@1",
+                  "dataType": "pg/timestamp",
+                  "default": {
+                    "expression": "now()",
+                    "kind": "function"
+                  },
+                  "nullable": false
+                },
+                "entityId": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "entityType": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false,
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "EnrichmentEntityType",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                },
+                "errorCode": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
+                },
+                "errorMessage": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
+                },
+                "id": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "inputHash": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "lockedAt": {
+                  "codecId": "pg/timestamp-string@1",
+                  "dataType": "pg/timestamp",
+                  "nullable": true
+                },
+                "maxAttempts": {
+                  "codecId": "pg/int4@1",
+                  "dataType": "pg/int4",
+                  "default": {
+                    "kind": "literal",
+                    "value": 3
+                  },
+                  "nullable": false
+                },
+                "model": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "nextRetryAt": {
+                  "codecId": "pg/timestamp-string@1",
+                  "dataType": "pg/timestamp",
+                  "nullable": true
+                },
+                "output": {
+                  "codecId": "pg/json@1",
+                  "dataType": "pg/json",
+                  "nullable": true
+                },
+                "promptVersion": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false
+                },
+                "stage": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": false,
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "EnrichmentStage",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                },
+                "startedAt": {
+                  "codecId": "pg/timestamp-string@1",
+                  "dataType": "pg/timestamp",
+                  "nullable": true
+                },
+                "status": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "default": {
+                    "kind": "literal",
+                    "value": "PENDING"
+                  },
+                  "nullable": false,
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "EnrichmentStatus",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                },
+                "updatedAt": {
+                  "codecId": "pg/timestamp-string@1",
+                  "dataType": "pg/timestamp",
+                  "default": {
+                    "expression": "now()",
+                    "kind": "function"
+                  },
+                  "nullable": false
+                },
+                "workerId": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "nullable": true
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "createdAt"
+                  ],
+                  "name": "EnrichmentJob_createdAt_idx_9575dbd7",
+                  "prefix": "EnrichmentJob_createdAt_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "entityType",
+                    "entityId"
+                  ],
+                  "name": "EnrichmentJob_entityType_entityId_idx_ea0fa809",
+                  "prefix": "EnrichmentJob_entityType_entityId_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "status",
+                    "lockedAt"
+                  ],
+                  "name": "EnrichmentJob_status_lockedAt_idx_9145e76a",
+                  "prefix": "EnrichmentJob_status_lockedAt_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "status",
+                    "nextRetryAt"
+                  ],
+                  "name": "EnrichmentJob_status_nextRetryAt_idx_58d36316",
+                  "prefix": "EnrichmentJob_status_nextRetryAt_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": [
+                {
+                  "columns": [
+                    "entityType",
+                    "entityId",
+                    "stage",
+                    "promptVersion",
+                    "inputHash"
+                  ]
+                }
+              ]
+            },
             "Genre": {
               "columns": {
                 "createdAt": {
@@ -1434,7 +2010,16 @@
                 }
               },
               "foreignKeys": [],
-              "indexes": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "name"
+                  ],
+                  "name": "Series_name_idx_ce87e6ba",
+                  "prefix": "Series_name_idx",
+                  "unique": false
+                }
+              ],
               "primaryKey": {
                 "columns": [
                   "id"
@@ -1526,11 +2111,33 @@
               "uniques": []
             },
             "SeriesGenre": {
+              "checks": [
+                {
+                  "expression": "\"role\" IN ('PRIMARY', 'SECONDARY')",
+                  "name": "SeriesGenre_role_check_be739b1c",
+                  "prefix": "SeriesGenre_role_check"
+                }
+              ],
               "columns": {
                 "genreId": {
                   "codecId": "pg/text@1",
                   "dataType": "pg/text",
                   "nullable": false
+                },
+                "role": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "default": {
+                    "kind": "literal",
+                    "value": "SECONDARY"
+                  },
+                  "nullable": false,
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "GenreRole",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
                 },
                 "seriesId": {
                   "codecId": "pg/text@1",
@@ -1597,6 +2204,15 @@
                   ],
                   "name": "SeriesGenre_seriesId_idx_582cd0a3",
                   "prefix": "SeriesGenre_seriesId_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "seriesId",
+                    "role"
+                  ],
+                  "name": "SeriesGenre_seriesId_role_idx_e3707400",
+                  "prefix": "SeriesGenre_seriesId_role_idx",
                   "unique": false
                 }
               ],
@@ -2037,11 +2653,33 @@
               "uniques": []
             },
             "StoryGenre": {
+              "checks": [
+                {
+                  "expression": "\"role\" IN ('PRIMARY', 'SECONDARY')",
+                  "name": "StoryGenre_role_check_be739b1c",
+                  "prefix": "StoryGenre_role_check"
+                }
+              ],
               "columns": {
                 "genreId": {
                   "codecId": "pg/text@1",
                   "dataType": "pg/text",
                   "nullable": false
+                },
+                "role": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
+                  "default": {
+                    "kind": "literal",
+                    "value": "SECONDARY"
+                  },
+                  "nullable": false,
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "GenreRole",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
                 },
                 "storyId": {
                   "codecId": "pg/text@1",
@@ -2108,6 +2746,15 @@
                   ],
                   "name": "StoryGenre_storyId_idx_cd452158",
                   "prefix": "StoryGenre_storyId_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "storyId",
+                    "role"
+                  ],
+                  "name": "StoryGenre_storyId_role_idx_beea31dc",
+                  "prefix": "StoryGenre_storyId_role_idx",
                   "unique": false
                 }
               ],
@@ -2248,16 +2895,57 @@
                 }
               ]
             }
+          },
+          "valueSet": {
+            "EnrichmentEntityType": {
+              "kind": "valueSet",
+              "values": [
+                "STORY",
+                "AUTHOR",
+                "SERIES"
+              ]
+            },
+            "EnrichmentStage": {
+              "kind": "valueSet",
+              "values": [
+                "STORY_DESCRIPTION",
+                "AUTHOR_RESOLUTION",
+                "AUTHOR_BIO",
+                "SERIES_RESOLUTION",
+                "SERIES_DESCRIPTION",
+                "SERIES_CHRONOLOGY",
+                "STORY_CLASSIFICATION",
+                "SERIES_CLASSIFICATION"
+              ]
+            },
+            "EnrichmentStatus": {
+              "kind": "valueSet",
+              "values": [
+                "PENDING",
+                "PROCESSING",
+                "COMPLETED",
+                "FAILED",
+                "NEEDS_REVIEW",
+                "SKIPPED"
+              ]
+            },
+            "GenreRole": {
+              "kind": "valueSet",
+              "values": [
+                "PRIMARY",
+                "SECONDARY"
+              ]
+            }
           }
         },
         "id": "public",
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "0cbcecfe51dd59afcd7f99adc3caf1747c9617635677ee8754af24eefaf1e248"
+    "storageHash": "691c6852a8416be669ef3c7b6db6d614aa591cc19d469547be0c88a67fffbf8e"
   },
   "execution": {
-    "executionHash": "9fd8fae1a789756bfd64f009640ce2640136884a58d61512e1ac68ae2a27f4ea",
+    "executionHash": "22e22c07a72289ac0d02cb2b376f5595969f02f2ae6bcb2ca0eab554804ad353",
     "mutations": {
       "defaults": [
         {
@@ -2278,6 +2966,17 @@
           },
           "ref": {
             "entry": "Channel",
+            "field": "id",
+            "namespace": "public"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "cuid2",
+            "kind": "generator"
+          },
+          "ref": {
+            "entry": "EnrichmentJob",
             "field": "id",
             "namespace": "public"
           }

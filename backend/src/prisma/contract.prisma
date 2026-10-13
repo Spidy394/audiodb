@@ -1,50 +1,51 @@
 // use prisma-8
-
 model Channel {
-  id               String   @id @default(cuid(2))
+  id               String          @id @default(cuid(2))
   name             String
-  url              String   @unique
+  url              String          @unique
   youtubeChannelId String?
-  createdAt   TimestampString @default(now())
-  updatedAt   TimestampString @default(now())
+  createdAt        TimestampString @default(now())
+  updatedAt        TimestampString @default(now())
 
-  shows Show[]
+  shows            Show[]
 }
 
 model Show {
-  id          String   @id @default(cuid(2))
+  id          String          @id @default(cuid(2))
   name        String
   channelId   String
   description String?
   createdAt   TimestampString @default(now())
   updatedAt   TimestampString @default(now())
 
-  channel Channel @relation(fields: [channelId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  channel     Channel         @relation(fields: [channelId], references: [id], onDelete: Restrict, onUpdate: Cascade)
 
-  stories Story[]
+  stories     Story[]
+
+  @@index([channelId])
 }
 
 model Story {
-  id            String   @id @default(cuid(2))
+  id            String           @id @default(cuid(2))
   title         String
-  youtubeId     String   @unique
+  youtubeId     String           @unique
   description   String?
-  url           String   @unique
+  url           String           @unique
   thumbnailUrl  String?
   duration      Int?
   publishedAt   TimestampString?
   showId        String
   seriesId      String?
   episodeNumber Int?
-  createdAt   TimestampString @default(now())
-  updatedAt   TimestampString @default(now())
+  createdAt     TimestampString  @default(now())
+  updatedAt     TimestampString  @default(now())
 
-  show Show @relation(fields: [showId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  series Series? @relation(fields: [seriesId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  show          Show             @relation(fields: [showId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  series        Series?          @relation(fields: [seriesId], references: [id], onDelete: SetNull, onUpdate: Cascade)
 
-  authors StoryAuthor[]
-  genres  StoryGenre[]
-  themes  StoryTheme[]
+  authors       StoryAuthor[]
+  genres        StoryGenre[]
+  themes        StoryTheme[]
 
   @@index([showId])
   @@index([seriesId, episodeNumber])
@@ -53,57 +54,59 @@ model Story {
 }
 
 model Series {
-  id          String   @id @default(cuid(2))
+  id          String          @id @default(cuid(2))
   name        String
   description String?
   createdAt   TimestampString @default(now())
   updatedAt   TimestampString @default(now())
 
-  stories Story[]
-  authors SeriesAuthor[]
-  genres  SeriesGenre[]
-  themes  SeriesTheme[]
+  stories     Story[]
+  authors     SeriesAuthor[]
+  genres      SeriesGenre[]
+  themes      SeriesTheme[]
+
+  @@index([name])
 }
 
 model Author {
-  id        String   @id @default(cuid(2))
+  id        String          @id @default(cuid(2))
   name      String
   bio       String?
-  createdAt   TimestampString @default(now())
-  updatedAt   TimestampString @default(now())
+  createdAt TimestampString @default(now())
+  updatedAt TimestampString @default(now())
 
-  stories StoryAuthor[]
-  series  SeriesAuthor[]
+  stories   StoryAuthor[]
+  series    SeriesAuthor[]
 
   @@index([name])
 }
 
 model Genre {
-  id        String   @id @default(cuid(2))
-  name      String   @unique
-  createdAt   TimestampString @default(now())
-  updatedAt   TimestampString @default(now())
+  id        String          @id @default(cuid(2))
+  name      String          @unique
+  createdAt TimestampString @default(now())
+  updatedAt TimestampString @default(now())
 
-  stories StoryGenre[]
-  series  SeriesGenre[]
+  stories   StoryGenre[]
+  series    SeriesGenre[]
 }
 
 model Theme {
-  id        String   @id @default(cuid(2))
-  name      String   @unique
-  createdAt   TimestampString @default(now())
-  updatedAt   TimestampString @default(now())
+  id        String          @id @default(cuid(2))
+  name      String          @unique
+  createdAt TimestampString @default(now())
+  updatedAt TimestampString @default(now())
 
-  stories StoryTheme[]
-  series  SeriesTheme[]
+  stories   StoryTheme[]
+  series    SeriesTheme[]
 }
 
 model StoryAuthor {
   storyId  String
   authorId String
 
-  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  author Author @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  story    Story  @relation(fields: [storyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  author   Author @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([storyId, authorId])
   @@index([authorId])
@@ -112,20 +115,22 @@ model StoryAuthor {
 model StoryGenre {
   storyId String
   genreId String
+  role    GenreRole @default(SECONDARY)
 
-  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  genre Genre @relation(fields: [genreId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  story   Story     @relation(fields: [storyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  genre   Genre     @relation(fields: [genreId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([storyId, genreId])
   @@index([genreId])
+  @@index([storyId, role])
 }
 
 model StoryTheme {
   storyId String
   themeId String
 
-  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  theme Theme @relation(fields: [themeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  story   Story  @relation(fields: [storyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  theme   Theme  @relation(fields: [themeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([storyId, themeId])
   @@index([themeId])
@@ -135,8 +140,8 @@ model SeriesAuthor {
   seriesId String
   authorId String
 
-  series Series @relation(fields: [seriesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  author Author @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  series   Series @relation(fields: [seriesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  author   Author @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([seriesId, authorId])
   @@index([authorId])
@@ -145,21 +150,91 @@ model SeriesAuthor {
 model SeriesGenre {
   seriesId String
   genreId  String
+  role     GenreRole @default(SECONDARY)
 
-  series Series @relation(fields: [seriesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  genre Genre @relation(fields: [genreId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  series   Series    @relation(fields: [seriesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  genre    Genre     @relation(fields: [genreId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([seriesId, genreId])
   @@index([genreId])
+  @@index([seriesId, role])
 }
 
 model SeriesTheme {
   seriesId String
   themeId  String
 
-  series Series @relation(fields: [seriesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  theme Theme @relation(fields: [themeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  series   Series @relation(fields: [seriesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  theme    Theme  @relation(fields: [themeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@id([seriesId, themeId])
   @@index([themeId])
+}
+
+model EnrichmentJob {
+  id            String               @id @default(cuid(2))
+
+  entityType    EnrichmentEntityType
+  entityId      String
+  stage         EnrichmentStage
+
+  status        EnrichmentStatus     @default(PENDING)
+
+  inputHash     String
+  promptVersion String
+  model         String
+
+  output        Json?
+
+  attempts      Int                  @default(0)
+  maxAttempts   Int                  @default(3)
+
+  workerId      String?
+  lockedAt      TimestampString?
+  startedAt     TimestampString?
+  nextRetryAt   TimestampString?
+  completedAt   TimestampString?
+
+  errorCode     String?
+  errorMessage  String?
+
+  createdAt     TimestampString      @default(now())
+  updatedAt     TimestampString      @default(now())
+
+  @@unique([entityType, entityId, stage, promptVersion, inputHash])
+  @@index([status, nextRetryAt])
+  @@index([entityType, entityId])
+  @@index([status, lockedAt])
+  @@index([createdAt])
+}
+
+enum EnrichmentStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  NEEDS_REVIEW
+  SKIPPED
+}
+
+enum EnrichmentEntityType {
+  STORY
+  AUTHOR
+  SERIES
+}
+
+enum EnrichmentStage {
+  STORY_DESCRIPTION
+  AUTHOR_RESOLUTION
+  AUTHOR_BIO
+  SERIES_RESOLUTION
+  SERIES_DESCRIPTION
+  SERIES_CHRONOLOGY
+  STORY_CLASSIFICATION
+  SERIES_CLASSIFICATION
+}
+
+enum GenreRole {
+  PRIMARY
+  SECONDARY
 }
